@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <meta charset="UTF-8">
+    <title>Node Grapher</title>
+    <link rel="stylesheet" type="text/css" href="public/css/style.css">
+    <link rel='icon' href='public/images/favicon.png' type='image/x-icon'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id="navbar">
+      <div id="site-name">Node Grapher</div>
+      <a href="/" class="nav-button cell2">Home</a>
+      <div class="nav-vertline cell3"></div>
+      <a href="/about" class="nav-button cell4">About</a>
+      <div class="nav-vertline cell5"></div>
+      <a href="/contact" class="nav-button cell6">Contact</a>
+      <div class="nav-vertline cell7"></div>
+      <a href="/login" class="nav-button cell8">Login</a>
+      <div id="hamburger" onclick="expand(this)"><i class="fas fa-bars"></i></div>
+    </div>
+
+    <div id="node-graph">
+      <div class="node" id="demo-node-404">
+        <div class="connection-point connection-point-node"></div>
+        <div class="title">
+          <h4 class="title-text">!!!!!Error!!!!!</h4>
+        </div>
+        <div class="item-list">
+          <div class="item">
+            <div class="connection-point connection-point-item cell1"></div>
+            <div class="item-text cell2">404</div>
+            <div class="connection-point connection-point-item cell3"></div>
+          </div>
+          <div class="item">
+            <div class="connection-point connection-point-item cell1"></div>
+            <div class="item-text cell2">Page not found</div>
+            <div class="connection-point connection-point-item cell3"></div>
+          </div>
+          <div class="new-item noselect">
+            <div class="add-item cell1">+</div>
+            <div class="item-text cell2">Add New Item</div>
+          </div>
+          <div class="connection-point connection-point-node"></div>
+        </div>
+      </div>
+    </div>
+    <script src="public/js/main.js"></script>
+  </body>
+  <footer>
+  </footer>
+</html>
