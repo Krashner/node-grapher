@@ -173,14 +173,14 @@ nodegrapher.post('/sendEmail', (req, res) => {
   
     // Create reusable transporter object defined with the NodeMailer module
     let transporter = nodemailer.createTransport({
-      // service: "gmail",
-      host: "smtp.gmail.com", // can use EITHER {service: "gmail"} OR {host: "smtp.google.com"}
-      port: 587, // use the TLS port
-      secure: false, // true for 465 (SSL), false for other ports
-      auth: AUTH_ENV,
-      tls:{
-        rejectUnauthorized: false // allow unauthorized TLS connections for this application's "/sendEmail" POST request
-      }
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            type: 'OAuth2',
+            user: process.env.TTU_WP_EMAIL_ADDR,
+            accessToken: process.env.EMAIL_ACCESS_TOKEN
+        }
     });
   
     // Setup email data object
