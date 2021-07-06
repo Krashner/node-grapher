@@ -169,8 +169,9 @@ nodegrapher.post('/sendEmail', (req, res) => {
       const AUTH_ENV = {  
         type: 'OAuth2',
         user: process.env.TTU_WP_EMAIL_ADDR,
-        pass: process.env.TTU_WP_EMAIL_PASS,
-        accessToken: process.env.EMAIL_ACCESS_TOKEN
+        clientId: process.env.GMAIL_CLIENTID,
+        clientSecret: process.env.GMAIL_CLIENTSECRET,
+        accessToken: process.env.EMAIL_ACCESS_TOKEN,
       }
   
     // Create reusable transporter object defined with the NodeMailer module
@@ -183,9 +184,9 @@ nodegrapher.post('/sendEmail', (req, res) => {
   
     // Setup email data object
     let mailOptions = {
-        from: '"Justin Buttrey\'s NodeGrapher App" <csc3100dummy@gmail.com>', // sender address
-        to: "justin@jbuttrey.com", // comma separated list of receivers
-        cc: "csc3100dummy@gmail.com", // carbon copy option address option
+        from: "Justin Buttrey\'s NodeGrapher App <" + process.env.TTU_WP_EMAIL_ADDR + ">",//'"Justin Buttrey\'s NodeGrapher App" <csc3100dummy@gmail.com>', // sender address
+        to: process.env.SEND_TO_EMAIL_ADDR,//"justin@jbuttrey.com", // comma separated list of receivers
+        cc: null,//"csc3100dummy@gmail.com", // carbon copy option address option
         bcc: null, // blind carbon copy address option
         subject: 'Justin Buttrey\'s NodeMailer App (New Contact Request)', // Subject line
         html: EMAIL_HTML_BODY // html body
