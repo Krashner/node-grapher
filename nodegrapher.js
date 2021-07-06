@@ -13,7 +13,7 @@ const bcrypt = require('bcrypt'); //for hashing passwords
 
 // –––––––––––––––––––––––––––––––––––––––––––––––– IMPORT AND CONFIGURE CUSTOM PACKAGES ––––––––––––––––––––––––––––––––––––––––––––––– //
 
-const conn = require('./db_connection'); // import the database connection object
+// const conn = require('./db_connection'); // import the database connection object
 
 // ––––––––––––––––––––––––––––––––––––––––––––––– SETUP PUBLIC RESOURCES AND MIDDLEWARE ––––––––––––––––––––––––––––––––––––––––––––––– //
 
@@ -96,67 +96,67 @@ nodegrapher.get("/*",function(req,res){
 // –––––––––––––––––––––––––––––––––––––––––––––––––––––– HANDLE HTTP POST REQUESTS –––––––––––––––––––––––––––––––––––––––––––––––––––– //
 
 //handle the POST reqeuest to login
-nodegrapher.post('/account_login_attempt', (req, res) => {
+// nodegrapher.post('/account_login_attempt', (req, res) => {
 
-    let username = req.body.login_username;
-    let password = req.body.login_password;
+//     let username = req.body.login_username;
+//     let password = req.body.login_password;
     
-    //find the input username's password
-    conn.query("SELECT Password FROM Users WHERE Username = ?", [username], (err, results, fields) => {
-        if (err){
-            console.log(err);
-            res.render('login', {loginMsg: "An error occurred", layout: false});
-            return;
-        }
-        if(results.length > 0 && results[0].Password){
-            //compare the input password with the hashed password
-            bcrypt.compare(password, results[0].Password, (err, result)=>{
-                if(result){
-                    res.render('login', {loginMsg: "Logged in as " + username, layout: false});
-                }else{
-                    res.render('login', {loginMsg: "Invalid username or password", layout: false});
-                }
-            });
-        }else{
-            res.render('login', {loginMsg: "Invalid username or password", layout: false});
-        }
-    });
-});
+//     //find the input username's password
+//     conn.query("SELECT Password FROM Users WHERE Username = ?", [username], (err, results, fields) => {
+//         if (err){
+//             console.log(err);
+//             res.render('login', {loginMsg: "An error occurred", layout: false});
+//             return;
+//         }
+//         if(results.length > 0 && results[0].Password){
+//             //compare the input password with the hashed password
+//             bcrypt.compare(password, results[0].Password, (err, result)=>{
+//                 if(result){
+//                     res.render('login', {loginMsg: "Logged in as " + username, layout: false});
+//                 }else{
+//                     res.render('login', {loginMsg: "Invalid username or password", layout: false});
+//                 }
+//             });
+//         }else{
+//             res.render('login', {loginMsg: "Invalid username or password", layout: false});
+//         }
+//     });
+// });
 
 
-//handle the POST reqeuest to login
-nodegrapher.post('/account_create_attempt', (req, res) => {
+// //handle the POST reqeuest to login
+// nodegrapher.post('/account_create_attempt', (req, res) => {
 
-    let username = req.body.create_username;
-    let password = req.body.create_password;
+//     let username = req.body.create_username;
+//     let password = req.body.create_password;
 
-    //12 if the amount to salt, roughly doubles time for every 1
-    bcrypt.hash(password, 12, (err, hash)=>{
-        //try to create account if given username doesn't exist
-        conn.query("SELECT Username FROM Users WHERE Username = ?", [username], (err, results, fields) => {
-            if (err){
-                console.log(err);
-                res.render('login', {createMsg: "An error occurred", layout: false});
-                return;
-            }
-            if(results.length == 0){
-                conn.query("INSERT INTO Users (Username, Password) VALUES (?, ?)", [username, hash], (err, results, fields) => {
-                    if (err) {
-                        console.log(err);
-                        res.render('login', {createMsg: "Could not create account", layout: false});
-                        return;
-                    }
-                    else {
-                        res.render('login', {createMsg: "Account created", layout: false});
-                        return;
-                    }
-                });
-            }else{
-                res.render('login', {createMsg: "Account already exists", layout: false});
-            }
-        });
-    });
-});
+//     //12 if the amount to salt, roughly doubles time for every 1
+//     bcrypt.hash(password, 12, (err, hash)=>{
+//         //try to create account if given username doesn't exist
+//         conn.query("SELECT Username FROM Users WHERE Username = ?", [username], (err, results, fields) => {
+//             if (err){
+//                 console.log(err);
+//                 res.render('login', {createMsg: "An error occurred", layout: false});
+//                 return;
+//             }
+//             if(results.length == 0){
+//                 conn.query("INSERT INTO Users (Username, Password) VALUES (?, ?)", [username, hash], (err, results, fields) => {
+//                     if (err) {
+//                         console.log(err);
+//                         res.render('login', {createMsg: "Could not create account", layout: false});
+//                         return;
+//                     }
+//                     else {
+//                         res.render('login', {createMsg: "Account created", layout: false});
+//                         return;
+//                     }
+//                 });
+//             }else{
+//                 res.render('login', {createMsg: "Account already exists", layout: false});
+//             }
+//         });
+//     });
+// });
 
 // Handle the POST request sent to the "/sendEmail" route
 nodegrapher.post('/sendEmail', (req, res) => {
@@ -168,7 +168,8 @@ nodegrapher.post('/sendEmail', (req, res) => {
   
       const AUTH_ENV = {  
         user: process.env.TTU_WP_EMAIL_ADDR,
-        pass: process.env.TTU_WP_EMAIL_PASS
+        pass: process.env.TTU_WP_EMAIL_PASS,
+        accessToken: process.env.EMAIL_ACCESS_TOKEN
       }
   
     // Create reusable transporter object defined with the NodeMailer module
@@ -176,18 +177,14 @@ nodegrapher.post('/sendEmail', (req, res) => {
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
-        auth: {
-            type: 'OAuth2',
-            user: process.env.TTU_WP_EMAIL_ADDR,
-            accessToken: process.env.EMAIL_ACCESS_TOKEN
-        }
+        auth: AUTH_ENV
     });
   
     // Setup email data object
     let mailOptions = {
         from: '"Justin Buttrey\'s NodeGrapher App" <csc3100dummy@gmail.com>', // sender address
-        to: "jbuttrey42@students.tntech.edu",//"jagibson44@students.tntech.edu", // comma separated list of receivers
-        cc: null,//"acrockett@tntech.edu", // carbon copy option address option
+        to: "justin@jbuttrey.com", // comma separated list of receivers
+        cc: null, // carbon copy option address option
         bcc: null, // blind carbon copy address option
         subject: 'Justin Buttrey\'s NodeMailer App (New Contact Request)', // Subject line
         html: EMAIL_HTML_BODY // html body
