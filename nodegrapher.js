@@ -186,7 +186,7 @@ nodegrapher.post('/sendEmail', (req, res) => {
     let mailOptions = {
         from: "Justin Buttrey\'s NodeGrapher App <" + process.env.TTU_WP_EMAIL_ADDR + ">",//'"Justin Buttrey\'s NodeGrapher App" <csc3100dummy@gmail.com>', // sender address
         to: process.env.SEND_TO_EMAIL_ADDR,//"justin@jbuttrey.com", // comma separated list of receivers
-        cc: null,//"csc3100dummy@gmail.com", // carbon copy option address option
+        cc: process.env.TTU_WP_EMAIL_ADDR,//"csc3100dummy@gmail.com", // carbon copy option address option
         bcc: null, // blind carbon copy address option
         subject: 'Justin Buttrey\'s NodeMailer App (New Contact Request)', // Subject line
         html: EMAIL_HTML_BODY // html body
