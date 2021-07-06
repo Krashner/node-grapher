@@ -28,6 +28,7 @@ body{
     -ms-grid-columns: 1fr 7em 1em 7em 1em 7em;
     align-content: center;
     width: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 #hamburger{
@@ -48,21 +49,29 @@ body{
 }
 
 .nav-button{
-    background-color: #66fcf1;
+    background-color: #394c60;
     padding: 1em;
     border-radius: 3px;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
-    color:#1F2833;
+    color: white;
     text-decoration: none;
     margin: auto;
     width: 4em;
     text-align: center;
     display: block;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
 }
 
 .nav-button:hover{
-    background-color: #45A29E;
+    background-color: #4d6580;
+}
+
+.nav-button:active{
+    transform: translateY(1px);
 }
 
 .nav-button-container{
@@ -75,7 +84,7 @@ body{
 
 .nav-vertline {
     /* border: 3px solid #66fcf1; */
-    background-color: #66fcf1;
+    background-color: #394c60;
     width: 6px;
     height: 30%;
     margin: auto;
@@ -147,18 +156,19 @@ body{
     z-index: 1;
     width: 3em;
     height: 3em;
-    background-color: #66fcf1;  
+    background-color: #394c60;  
     border: none;
     margin: 0.5em;
     border-radius: 3px;
+    color: white;
 }
 
 #add-node:hover{
-    background-color: #56b9b9;
+    background-color: #4d6580;
 }
 
 #add-node:active{
-    background-color: #418f8f;
+    transform: translateY(1px);
 }
 
 #add-node:focus{
@@ -250,7 +260,7 @@ body{
 
 .item{
     background-color: #fff;
-    box-shadow: 0 1px 0 rgba(9,30,66,.25);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     border-radius: 3px;
     margin: 1em auto 1em auto;
     min-height: 2em;
