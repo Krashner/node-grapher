@@ -23,8 +23,8 @@ body{
     text-align: right;
     display: grid;
     display: -ms-grid;
-    grid-template-columns: 1fr 7em 1em 7em 1em 7em 1em 7em;
-    -ms-grid-columns: 1fr 7em 1em 7em 1em 7em 1em 7em;
+    grid-template-columns: 1fr 7em 1em 7em 1em 7em;
+    -ms-grid-columns: 1fr 7em 1em 7em 1em 7em;
     align-content: center;
     width: 100%;
 }
