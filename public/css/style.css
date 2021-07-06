@@ -1,8 +1,9 @@
 
 body{
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color:#1F2833;
+    font-family: 'Encode Sans SC', Arial, Helvetica, sans-serif;
+
+    background-image: url("/images/bg.png");
     color: white;
 }
 
@@ -218,6 +219,7 @@ body{
     display: -ms-grid;
     grid-template-columns: 90% 10%; 
     -ms-grid-columns: 90% 10%;
+    overflow-wrap: break-word;
 }
 
 .node-delete{
@@ -269,11 +271,13 @@ body{
 .item-text{
     display: inline-block;
     vertical-align: -webkit-baseline-middle;
+    overflow-wrap: break-word;
 }
 
 .item-delete{
     color: grey;
     opacity: 0.7;
+    margin: auto;
 }
 
 .item-delete:hover{

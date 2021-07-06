@@ -23,7 +23,7 @@ const conn = require('./db_connection'); // import the database connection objec
 
 //public directory and view routing
 // nodegrapher.use(express.static(__dirname + '/public')); // set default file path for public resources (images, stylesheets, etc...)
-nodegrapher.use('/public', express.static(path.join(__dirname, '/public')));
+nodegrapher.use('/', express.static(path.join(__dirname, '/public')));
 
 // Declare view engine setup
 nodegrapher.engine('handlebars', exphbs());
