@@ -167,6 +167,7 @@ nodegrapher.post('/sendEmail', (req, res) => {
       <p>Message: ${req.body.message}</p>`; // create the body of the email with embedded HTML
   
       const AUTH_ENV = {  
+        type: 'OAuth2',
         user: process.env.TTU_WP_EMAIL_ADDR,
         pass: process.env.TTU_WP_EMAIL_PASS,
         accessToken: process.env.EMAIL_ACCESS_TOKEN
