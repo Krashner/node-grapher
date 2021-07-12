@@ -213,9 +213,10 @@ body{
     min-width: 10em;
     position: absolute;
     width: 15em;
-/* temp positioning */
+/* temp positioning 
     left: 100px;
     top: 100px;
+    */
 }
 
 .node:hover {

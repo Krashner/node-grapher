@@ -103,19 +103,17 @@ function dragStart(e) {
 		active = true;
 		activeItem = targetItem;
 
-		let xOffset = activeItem["xOffset"];
-		let yOffset = activeItem["yOffset"];
-
-		if (!xOffset) xOffset = 0;
-		if (!yOffset) yOffset = 0;
-
+        var style = window.getComputedStyle(activeItem);
+        var matrix = new WebKitCSSMatrix(style.transform);
+        
 		if (e.type === "touchstart") {
-			initialX = e.touches[0].clientX - xOffset;
-			initialY = e.touches[0].clientY - yOffset;
+			initialX = e.touches[0].clientX - matrix.m41;
+			initialY = e.touches[0].clientY - matrix.m42;
 		} else {
-			initialX = e.clientX - xOffset;
-			initialY = e.clientY - yOffset;
+			initialX = e.clientX - matrix.m41;
+			initialY = e.clientY - matrix.m42;
 		}
+
 	}
 }
 
@@ -172,10 +170,7 @@ function drag(e) {
 			currentX = e.clientX - initialX;
 			currentY = e.clientY - initialY;
 		}
-
-		activeItem["xOffset"] = currentX;
-		activeItem["yOffset"] = currentY;
-
+        
 		if (activeItem.nodeName == "DIV") {
 			setPosition(currentX, currentY, activeItem);
 			updateLines(activeItem);
@@ -319,12 +314,15 @@ function deleteLines(arr) {
 }
 
 //find if and where the mouse intersects with a line, overrides contextmenu action
-function findLineIntersect(element, event) {
-	let svg = element.querySelectorAll(".lines");
+function findLineIntersect(graph, event) {
+	let svg = graph.querySelectorAll(".lines");
+
+    //temp, need ui and auto save function
+    serializeNodes(graph);
 
 	if (svg.length > 0) {
 		svg.forEach((lineContainer) => {
-			let mousePos = getCursorPosition(element, event);
+			let mousePos = getCursorPosition(graph, event);
 			let line = lineContainer.firstChild;
 
 			let x1 = line.getAttribute("x1");
@@ -348,11 +346,21 @@ function findLineIntersect(element, event) {
 	}
 }
 
+//serialize node data
+function serializeNodes(graph){
+
+    //console.log(graph.innerHTML);
+    //console.log(JSON.stringify(graph.innerHTML));
+    //console.log( $( graph ).serialize() );
+    graph.innerHTML= "<div class=\"node noselect\" ontouchstart=\"selectNode(this)\" ontouchend=\"deselectNode(this)\" onmouseenter=\"selectNode(this)\" onmouseleave=\"deselectNode(this)\" style=\"transform: translate3d(551px, 169px, 0px);\">\n                <div class=\"connection-point connection-point-node\" ontouchstart=\"selectConnection(this)\" ontouchend=\"deselectConnection(this)\" onmousedown=\"createLine(this)\" onmouseenter=\"selectConnection(this)\" onmouseleave=\"deselectConnection(this)\"></div>\n                <div class=\"title\">\n                    <h4 class=\"title-text cell1\">sad</h4>\n                    <div class=\"cell2 node-delete\" onclick=\"deleteNode(this)\"><i class=\"fas fa-trash\"></i></div>\n                </div>\n                <div class=\"item-list\"><div class=\"item\">\n                    <div class=\"connection-point connection-point-item cell1\" onmousedown=\"createLine(this)\" onmouseenter=\"selectConnection(this)\" onmouseleave=\"deselectConnection(this)\"></div>\n                    <div class=\"item-text cell2\">asdsd</div>\n                    <div class=\"item-text cell3 item-delete\" onclick=\"deleteItem(this)\"><i class=\"fas fa-trash\"></i></div>\n                    <div class=\"connection-point connection-point-item cell4\" onmousedown=\"createLine(this)\" onmouseenter=\"selectConnection(this)\" onmouseleave=\"deselectConnection(this)\"></div>\n                </div></div>\n                <div class=\"add-item-dialogue invisible\">\n                    <input class=\"add-item-input\" type=\"text\" placeholder=\"Enter item...\" required=\"\">\n                    <div>      \n                    <button name=\"add-item-btn\" onclick=\"createItem(this)\">Add Item</button>\n                    <button onclick=\"hideItemDialogue(this)\">X</button>\n                    </div>\n                </div>\n                <div class=\"new-item noselect\" onclick=\"showItemDialogue(this)\">\n                    <div class=\"add-item cell1\">+</div>\n                    <div class=\"item-text cell2\">Add New Item</div>\n                </div>\n                <div class=\"connection-point connection-point-node\" onmousedown=\"createLine(this)\" onmouseenter=\"selectConnection(this)\" onmouseleave=\"deselectConnection(this)\"></div>\n            </div>"
+   
+}
+
+//returns the coordinates of the mouse
 function getCursorPosition(element, event) {
 	const rect = element.getBoundingClientRect();
 	const x = event.clientX - rect.left;
 	const y = event.clientY - rect.top;
-	//console.log("mouse: x: " + x + " y: " + y)
 	return { x, y };
 }
 
@@ -416,9 +424,6 @@ function createNode(x) {
 		let n = newNode.childNodes[0];
 		n.querySelector(".title-text").innerHTML = name.value;
 
-		let offsets = n.getBoundingClientRect();
-		n["xOffset"] = offsets.left;
-		n["yOffset"] = offsets.top;
 		n["name"] = name.value;
 		nodes.push(n);
 
