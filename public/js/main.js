@@ -320,7 +320,7 @@ function findLineIntersect(graph, event) {
 	let svg = graph.querySelectorAll(".lines");
 
 	//temp, need ui and auto save function
-	serializeNodes(graph);
+	//serializeNodes(graph);
 
 	if (svg.length > 0) {
 		svg.forEach((lineContainer) => {
@@ -350,11 +350,16 @@ function findLineIntersect(graph, event) {
 
 //serialize node data
 function serializeNodes(graph) {
-	//console.log(graph.innerHTML);
-	//console.log(JSON.stringify(graph.innerHTML));
-	//console.log( $( graph ).serialize() );
-	graph.innerHTML =
-		'<div class="node noselect" ontouchstart="selectNode(this)" ontouchend="deselectNode(this)" onmouseenter="selectNode(this)" onmouseleave="deselectNode(this)" style="transform: translate3d(551px, 169px, 0px);">\n                <div class="connection-point connection-point-node" ontouchstart="selectConnection(this)" ontouchend="deselectConnection(this)" onmousedown="createLine(this)" onmouseenter="selectConnection(this)" onmouseleave="deselectConnection(this)"></div>\n                <div class="title">\n                    <h4 class="title-text cell1">sad</h4>\n                    <div class="cell2 node-delete" onclick="deleteNode(this)"><i class="fas fa-trash"></i></div>\n                </div>\n                <div class="item-list"><div class="item">\n                    <div class="connection-point connection-point-item cell1" onmousedown="createLine(this)" onmouseenter="selectConnection(this)" onmouseleave="deselectConnection(this)"></div>\n                    <div class="item-text cell2">asdsd</div>\n                    <div class="item-text cell3 item-delete" onclick="deleteItem(this)"><i class="fas fa-trash"></i></div>\n                    <div class="connection-point connection-point-item cell4" onmousedown="createLine(this)" onmouseenter="selectConnection(this)" onmouseleave="deselectConnection(this)"></div>\n                </div></div>\n                <div class="add-item-dialogue invisible">\n                    <input class="add-item-input" type="text" placeholder="Enter item..." required="">\n                    <div>      \n                    <button name="add-item-btn" onclick="createItem(this)">Add Item</button>\n                    <button onclick="hideItemDialogue(this)">X</button>\n                    </div>\n                </div>\n                <div class="new-item noselect" onclick="showItemDialogue(this)">\n                    <div class="add-item cell1">+</div>\n                    <div class="item-text cell2">Add New Item</div>\n                </div>\n                <div class="connection-point connection-point-node" onmousedown="createLine(this)" onmouseenter="selectConnection(this)" onmouseleave="deselectConnection(this)"></div>\n            </div>';
+
+	//graph.innerHTML =
+	//	'<div class="node noselect" ontouchstart="selectNode(this)" ontouchend="deselectNode(this)" onmouseenter="selectNode(this)" onmouseleave="deselectNode(this)" style="transform: translate3d(551px, 169px, 0px);">\n                <div class="connection-point connection-point-node" ontouchstart="selectConnection(this)" ontouchend="deselectConnection(this)" onmousedown="createLine(this)" onmouseenter="selectConnection(this)" onmouseleave="deselectConnection(this)"></div>\n                <div class="title">\n                    <h4 class="title-text cell1">sad</h4>\n                    <div class="cell2 node-delete" onclick="deleteNode(this)"><i class="fas fa-trash"></i></div>\n                </div>\n                <div class="item-list"><div class="item">\n                    <div class="connection-point connection-point-item cell1" onmousedown="createLine(this)" onmouseenter="selectConnection(this)" onmouseleave="deselectConnection(this)"></div>\n                    <div class="item-text cell2">asdsd</div>\n                    <div class="item-text cell3 item-delete" onclick="deleteItem(this)"><i class="fas fa-trash"></i></div>\n                    <div class="connection-point connection-point-item cell4" onmousedown="createLine(this)" onmouseenter="selectConnection(this)" onmouseleave="deselectConnection(this)"></div>\n                </div></div>\n                <div class="add-item-dialogue invisible">\n                    <input class="add-item-input" type="text" placeholder="Enter item..." required="">\n                    <div>      \n                    <button name="add-item-btn" onclick="createItem(this)">Add Item</button>\n                    <button onclick="hideItemDialogue(this)">X</button>\n                    </div>\n                </div>\n                <div class="new-item noselect" onclick="showItemDialogue(this)">\n                    <div class="add-item cell1">+</div>\n                    <div class="item-text cell2">Add New Item</div>\n                </div>\n                <div class="connection-point connection-point-node" onmousedown="createLine(this)" onmouseenter="selectConnection(this)" onmouseleave="deselectConnection(this)"></div>\n            </div>';
+}
+
+//serialize node data
+function deSerializeNodes(graph) {
+
+	//graph.innerHTML =
+	//	'<div class="node noselect" ontouchstart="selectNode(this)" ontouchend="deselectNode(this)" onmouseenter="selectNode(this)" onmouseleave="deselectNode(this)" style="transform: translate3d(551px, 169px, 0px);">\n                <div class="connection-point connection-point-node" ontouchstart="selectConnection(this)" ontouchend="deselectConnection(this)" onmousedown="createLine(this)" onmouseenter="selectConnection(this)" onmouseleave="deselectConnection(this)"></div>\n                <div class="title">\n                    <h4 class="title-text cell1">sad</h4>\n                    <div class="cell2 node-delete" onclick="deleteNode(this)"><i class="fas fa-trash"></i></div>\n                </div>\n                <div class="item-list"><div class="item">\n                    <div class="connection-point connection-point-item cell1" onmousedown="createLine(this)" onmouseenter="selectConnection(this)" onmouseleave="deselectConnection(this)"></div>\n                    <div class="item-text cell2">asdsd</div>\n                    <div class="item-text cell3 item-delete" onclick="deleteItem(this)"><i class="fas fa-trash"></i></div>\n                    <div class="connection-point connection-point-item cell4" onmousedown="createLine(this)" onmouseenter="selectConnection(this)" onmouseleave="deselectConnection(this)"></div>\n                </div></div>\n                <div class="add-item-dialogue invisible">\n                    <input class="add-item-input" type="text" placeholder="Enter item..." required="">\n                    <div>      \n                    <button name="add-item-btn" onclick="createItem(this)">Add Item</button>\n                    <button onclick="hideItemDialogue(this)">X</button>\n                    </div>\n                </div>\n                <div class="new-item noselect" onclick="showItemDialogue(this)">\n                    <div class="add-item cell1">+</div>\n                    <div class="item-text cell2">Add New Item</div>\n                </div>\n                <div class="connection-point connection-point-node" onmousedown="createLine(this)" onmouseenter="selectConnection(this)" onmouseleave="deselectConnection(this)"></div>\n            </div>';
 }
 
 //returns the coordinates of the mouse
@@ -428,7 +433,7 @@ function createNode(x) {
 		n["name"] = name.value;
 		nodes.push(n);
 
-        //TODO:check if it's overlapping and offset by a few units if it is
+        //TODO:check if it's overlapping and offset by a few units if it
 		setPosition(100, 100, n);
 
 		name.value = "";
