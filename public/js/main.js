@@ -181,7 +181,6 @@ function drag(e) {
 }
 
 //update all the lines connected to the moving node
-//TODO: Theres'a bug when the page size is changed. x2 & y2 are no longer accurate
 function updateLines(e) {
 	let connectionPoints = e.querySelectorAll(".connection-point");
 	loopThroughLines(connectionPoints, "lines-start", "x1", "y1");
